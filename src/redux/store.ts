@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import cartSlice from "./slices/cartSlice";
+import cartSlice from "./module/cartSlice";
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 
 const store = configureStore({

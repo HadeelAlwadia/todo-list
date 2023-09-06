@@ -1,30 +1,25 @@
 import { Button, Menu, Modal, Stack, Typography } from "@mui/material";
 import { ShoppingCart } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
-
 import { useState } from "react";
 import CartItem from "./CartItem";
 import { useAppSelector } from "../redux/store";
 import { formatCurrency } from "../utilities/formatCurrency";
 
 const CartItems = () => {
-  const cart = useAppSelector((state) => state.cart.cart);
-  console.log(cart);
-
-  const totalPrice = cart.reduce((acc, produt) => {
-    return (acc += produt.price * produt.quantity);
-  }, 0);
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const {cart,getTotalPrice} = useAppSelector((state) => state.cart);
+  //here make the carible controll in module of cart
+  const [isOpenModalCart, setIsOpenModalCart] = useState(false);
+    
+  const handleToggleModalCart = () => setIsOpenModalCart(!isOpenModalCart);
 
   return (
     <div>
-      {cart.length > 0 && (
+
+      {cart.length  /*this delete becuse 0 get falseth value  */ && (
         <div>
           <div
-            onClick={handleOpen}
+            onClick={handleToggleModalCart}
             className="bg-white border-[1px] border-blue-500 mr-3 p-2 rounded-full cursor-pointer group duration-300 hover:bg-blue-500 hover:text-white relative"
           >
             <ShoppingCart className="text-[18px] text-blue-500 duration-300 group-hover:text-white" />
@@ -33,8 +28,8 @@ const CartItems = () => {
             </span>
           </div>
           <Modal
-            open={open}
-            onClose={handleClose}
+            open={isOpenModalCart}
+            onClose={handleToggleModalCart}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
@@ -47,8 +42,8 @@ const CartItems = () => {
               }}
               id="demo-positioned-menu"
               aria-labelledby="demo-positioned-button"
-              open={open}
-              onClose={handleClose}
+              open={isOpenModalCart}
+              onClose={handleToggleModalCart}
               anchorOrigin={{
                 vertical: "top",
                 horizontal: "right",
@@ -77,7 +72,7 @@ const CartItems = () => {
                       color: "white",
                     },
                   }}
-                  onClick={handleClose}
+                  onClick={handleToggleModalCart}
                 >
                   <CloseIcon />
                 </Button>
@@ -87,7 +82,7 @@ const CartItems = () => {
               })}
               <Stack direction="row" justifyContent="flex-end" p={1.5}>
                 <Typography variant="h5" component="p">
-                  Total Price: {formatCurrency(totalPrice)}
+                  Total Price: {formatCurrency(getTotalPrice(cart) )}
                 </Typography>
               </Stack>
             </Menu>

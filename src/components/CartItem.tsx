@@ -1,8 +1,8 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { formatCurrency } from "../utilities/formatCurrency";
-import { useAppDispatch } from "../redux/store";
-import { deleteProduct } from "../redux/slices/cartSlice";
+import { addProduct,deleteProduct, typeOfDeleteProduct } from "../redux/module/cartSlice";
+import { useDispatch } from "react-redux";
 
 type CartItemProps = {
   id: number;
@@ -11,8 +11,33 @@ type CartItemProps = {
   imgUrl: string;
   quantity: number;
 };
+
+
+
 const CartItem = ({ id, name, price, imgUrl, quantity }: CartItemProps) => {
-  const dispatch = useAppDispatch();
+  const dispatch=useDispatch();
+
+   /***
+   *  * onIncreaseHandler can declation as handleDeleteProduct
+
+   */
+   const handleAddProduct = () => {
+    dispatch(
+      addProduct({
+        id,
+        name,
+        price,
+        imgUrl,
+        quantity
+      })
+    )
+    }
+
+    const handleDeleteProduct = (typeOfDelete:typeOfDeleteProduct) => {
+      dispatch(
+        deleteProduct({id,typeOfDelete} ))
+      }
+
   return (
     <Stack p={1.5} direction="column">
       <Stack
@@ -33,21 +58,30 @@ const CartItem = ({ id, name, price, imgUrl, quantity }: CartItemProps) => {
           <Box>
             <img className="w-[90px] h-[90px] object-cover" src={imgUrl} />
           </Box>
-          <Stack direction="column" gap={1}>
-            <Typography variant="body1" component="p">
-              {name} x{quantity}
-            </Typography>
-            <Typography color="#777" variant="body1" component="span">
-              {formatCurrency(price)}
-            </Typography>
-          </Stack>
+
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+              gap={4}
+            >
+              <Button  variant="contained" onClick={()=>handleDeleteProduct('decressQuantity')}>
+                <Typography fontSize={18} >-</Typography>
+              </Button>
+              <Typography fontSize={20}>{quantity}</Typography>
+              <Button  variant="contained" onClick={handleAddProduct}>
+                <Typography fontSize={18}>+</Typography>
+              </Button>
+            </Stack>
+   
+
         </Stack>
         <Stack direction="row" alignItems="center" gap={1}>
           <Typography variant="body1" component="p">
             {formatCurrency(price * quantity)}
           </Typography>
           <Button
-            onClick={() => dispatch(deleteProduct({ id: id }))}
+        onClick={()=>handleDeleteProduct("deleteProduct")}
             sx={{
               color: "red",
               border: "1px solid red",
