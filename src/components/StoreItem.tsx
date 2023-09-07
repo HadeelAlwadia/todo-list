@@ -6,7 +6,6 @@ import {
   CardActions,
   Button
 } from '@mui/material'
-import { formatCurrency } from '../utilities/formatCurrency'
 import {  addProduct } from '../redux/module/cartSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../redux/store'
@@ -56,9 +55,7 @@ const dispatch=useDispatch();
         <Typography variant='h5' component='div'>
           {name}
         </Typography>
-        <Typography variant='h6' component='span' color='text.secondary'>
-          {formatCurrency(price)}
-        </Typography>
+      
       </CardContent>
       <CardActions>
         <Button
