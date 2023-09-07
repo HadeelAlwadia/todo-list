@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import cartSlice from "./module/cartSlice";
+import todoListSlice from "./module/todoListSlice";
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 
 const store = configureStore({
   reducer: {
-    cart: cartSlice,
+    todoList: todoListSlice,
   },
 });
 

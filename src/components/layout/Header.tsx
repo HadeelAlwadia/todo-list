@@ -1,9 +1,13 @@
+import { AppBar,Toolbar } from "@mui/material"
 
 const Header = () => {
   return (
-    <div>
-      header
-    </div>
+    <AppBar position="fixed"  sx={{background:'#213555'}}>
+        <Toolbar>
+           Todo
+        </Toolbar>
+       
+     </AppBar >
   )
 }
 

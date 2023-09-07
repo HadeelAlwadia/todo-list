@@ -1,8 +1,9 @@
+import { TodoProperty } from "../../../redux/module/todoListSlice"
 
-const Todo = () => {
+const Todo = ({id,imgUrl,name}:TodoProperty) => {
   return (
     <div>
-      
+       
     </div>
   )
 }

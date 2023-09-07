@@ -1,9 +1,13 @@
+import { Input } from "@mui/material"
+import { Button } from "../../common/index.style"
+import { Form, TextFiled } from "./AddTodoForm.style"
 
 const AddTodoForm = () => {
   return (
-    <form>
-      
-    </form>
+    <Form>
+      <TextFiled />
+      <Button type="submit">Add</Button> 
+    </Form>
   )
 }
 
