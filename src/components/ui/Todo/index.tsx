@@ -1,10 +1,33 @@
+import { Card, CardContent,CardMedia, Typography } from "@mui/material"
 import { TodoProperty } from "../../../redux/module/todoListSlice"
+import { Button } from "../../common/index.style"
 
 const Todo = ({id,imgUrl,name}:TodoProperty) => {
   return (
-    <div>
-       
-    </div>
+    <Card sx={{ minWidth: { xs: '300px', sm: '400px' }, height: 430 }}>
+    <CardMedia
+      component='img'
+      alt='green iguana'
+      sx={{ height: 250, maxWidth: 400 }}
+      image={imgUrl}
+    />
+    <CardContent
+      sx={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      }}
+    >
+      <Typography variant='h5' component='div'>
+        {name}
+      </Typography>
+     
+      <Button>
+        delete
+      </Button>
+   </CardContent>
+   
+  </Card>
   )
 }
 
