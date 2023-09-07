@@ -5,9 +5,10 @@ import { useState } from "react";
 import CartItem from "./CartItem";
 import { useAppSelector } from "../redux/store";
 import { formatCurrency } from "../utilities/formatCurrency";
+import { getTotalprice } from "../redux/module/cartSlice";
 
 const CartItems = () => {
-  const {cart,getTotalPrice} = useAppSelector((state) => state.cart);
+  const {cart} = useAppSelector((state) => state.cart);
   //here make the carible controll in module of cart
   const [isOpenModalCart, setIsOpenModalCart] = useState(false);
     
@@ -82,7 +83,7 @@ const CartItems = () => {
               })}
               <Stack direction="row" justifyContent="flex-end" p={1.5}>
                 <Typography variant="h5" component="p">
-                  Total Price: {formatCurrency(getTotalPrice(cart) )}
+                  Total Price: {formatCurrency(getTotalprice(cart))}
                 </Typography>
               </Stack>
             </Menu>

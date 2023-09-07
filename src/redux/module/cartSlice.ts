@@ -19,26 +19,25 @@ interface Cart  {
 
 export interface CartList{
   cart: Cart[];
-  getTotalPrice:(cart:Cart[])=>number
 };
 
 
 const initialState: CartList = {
   cart: items,
-  getTotalPrice:(cart:Cart[])=>cart.reduce((total:number,product:Cart)=>total+product.price*product.quantity,0)
 }
+export const getTotalprice=(cart:Cart[])=>cart.reduce((total,product)=>total+(product.price*product.quantity),0)
 
 const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-
-    addProduct: (state, action: PayloadAction<Cart>) => {
-      const foundProduct = state.cart.find(
-        (product) => product.id === action.payload.id
+    addProduct: (state:CartList, action: PayloadAction<Cart>) => {
+      const foundProduct =state.cart.find(
+        product => product.id === action.payload.id
       );
+      console.log(state)
       if (foundProduct) {
-        foundProduct.quantity += 1;
+      foundProduct.quantity += 1;
       } else {
         const productClone = {
           ...action.payload,
@@ -46,25 +45,24 @@ const cartSlice = createSlice({
         };
         state.cart.push(productClone);
       }
+
       saveDataToLS(state.cart);
     },
 
-    deleteProduct: (state, {payload}: PayloadAction<{ id: number,typeOfDelete:typeOfDeleteProduct}>) => {
-    let findProduct=null
-     if(payload.typeOfDelete==='decressQuantity'){
-         findProduct=state.cart.find((product:Cart)=>product.id===payload.id) as Cart
-    --findProduct.quantity
+     deleteProduct: (state, {payload}: PayloadAction<{ id: number,typeOfDelete:typeOfDeleteProduct}>) => {
+       
+      let indexOfProduct=0
+      const foundProduct=payload.typeOfDelete==='decressQuantity'? state.cart.find(
+        (product,index) => {indexOfProduct=index; return(product.id === payload.id)}
+      ):null;
+
+      if (foundProduct) {
+        foundProduct.quantity -= 1;
+        state.cart[indexOfProduct]=foundProduct
+      } else {
+       const newCart=state.cart.filter(product=>product.id!==payload.id)
+        state.cart=newCart;
       }
-
-    
-      const newCart = state.cart.filter(
-        (item) => item.id !== payload.id
-      );
-      
-      payload.typeOfDelete==='decressQuantity'?newCart.push(findProduct as Cart):console.log(findProduct)
-
-
-        return {...state,cart:newCart}
       
       saveDataToLS(state.cart);
     },
@@ -82,3 +80,6 @@ export const {
   emptyCart
   
 } = cartSlice.actions;
+
+//Proxy Object
+//https://www.reddit.com/r/reactjs/comments/ohibsl/arrayfind_returns_proxy_object/?rdt=65434

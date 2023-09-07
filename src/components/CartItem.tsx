@@ -65,10 +65,10 @@ const CartItem = ({ id, name, price, imgUrl, quantity }: CartItemProps) => {
               justifyContent="space-between"
               gap={4}
             >
-              <Button  variant="contained" onClick={()=>handleDeleteProduct('decressQuantity')}>
+              <Button  variant="contained" onClick={()=>quantity>1&& handleDeleteProduct('decressQuantity')}>
                 <Typography fontSize={18} >-</Typography>
               </Button>
-              <Typography fontSize={20}>{quantity}</Typography>
+              <Typography fontSize={20} >{quantity}</Typography>
               <Button  variant="contained" onClick={handleAddProduct}>
                 <Typography fontSize={18}>+</Typography>
               </Button>
