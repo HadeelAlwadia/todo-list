@@ -23,8 +23,9 @@ const todoListSlice = createSlice({
       return [payload,...state]
  
    },
-   emptyTodoList:()=>[]
-
+   relaodTodoList:()=>items,
+   emptyTodoList:()=>[],
+ 
   }}
 );
 
@@ -33,5 +34,6 @@ export const {
 
   addItemOfList,
   deleteItemOfList,
-  emptyTodoList
+  emptyTodoList,
+  relaodTodoList
 } = todoListSlice.actions;

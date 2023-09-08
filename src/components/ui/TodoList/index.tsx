@@ -3,13 +3,15 @@ import { useAppSelector } from "../../../redux/store"
 import Todo from "../Todo"
 import { Button } from "../../common/index.style"
 import { useDispatch } from "react-redux"
-import { emptyTodoList } from "../../../redux/module/todoListSlice"
+import { emptyTodoList ,relaodTodoList} from "../../../redux/module/todoListSlice"
 
  const TodoList = () => {
   const {todoList} =useAppSelector(state=>state)
   const dispatch=useDispatch()
   const handleEmptyList=()=>dispatch(emptyTodoList())
+  const handleRelaodTodoList=()=>dispatch(relaodTodoList())
 
+  
   return (
     <>
       <Stack
@@ -30,7 +32,7 @@ import { emptyTodoList } from "../../../redux/module/todoListSlice"
          <Todo key={item.id} {...item} />
       ):<h3>no item in products</h3>}
       </Stack>
-      <Button style={{marginLeft:'70%'}} onClick={handleEmptyList}>remove all products</Button>
+     <Button style={{marginLeft:'70%'}} onClick={todoList.length?handleEmptyList:handleRelaodTodoList}>{todoList.length? 'remove all products':'reload products'}</Button>
 
     </>
   
