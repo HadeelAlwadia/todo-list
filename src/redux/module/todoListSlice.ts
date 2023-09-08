@@ -1,15 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import itemsOfTodoList from '../../data/items.json'
- 
 
 export interface TodoProperty  {
   id: string;
   name: string;
   imgUrl: string;
 };
-const items:TodoProperty[]= itemsOfTodoList;
 
-const initialState: TodoProperty[] = items 
+const initialState: TodoProperty[] = itemsOfTodoList 
 
 const todoListSlice = createSlice({
   name: "todoList",
@@ -19,11 +17,8 @@ const todoListSlice = createSlice({
      const newTodoList=state.filter(item=>item.id!==payload.id)
      return [...newTodoList]
    },
-   addItemOfList:(state,{payload}:PayloadAction<TodoProperty>)=>{
-      return [payload,...state]
- 
-   },
-   relaodTodoList:()=>items,
+   addItemOfList:(state,{payload}:PayloadAction<TodoProperty>)=>[payload,...state],
+   relaodTodoList:()=>initialState,
    emptyTodoList:()=>[],
  
   }}
@@ -31,7 +26,6 @@ const todoListSlice = createSlice({
 
 export default todoListSlice.reducer;
 export const {
-
   addItemOfList,
   deleteItemOfList,
   emptyTodoList,
